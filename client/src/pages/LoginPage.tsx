@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import loginProfessor from '../routes/registerProfessor.ts';
+import loginProfessor from '../routes/loginProfessor.ts';
 
 export default function LoginPage() {
     const navigate = useNavigate();
@@ -26,12 +26,11 @@ export default function LoginPage() {
             const response = await loginProfessor(form);
             console.log('Login successful:', response);
 
-            // Stocker le token dans localStorage
             if (response.token) {
-                localStorage.setItem('AuthToken', response.token);
+                localStorage.setItem('token', response.token);
             }
 
-            navigate('/dashboard'); // redirection après login
+            navigate('/dashboard');
         } catch (err: any) {
             console.error(err);
             setError(err.message || 'Login failed');
@@ -42,6 +41,7 @@ export default function LoginPage() {
 
     return (
         <form onSubmit={handleSubmit} className="p-4 bg-white rounded shadow max-w-md mx-auto mt-10">
+            <p>Please login to activate your account.</p>
             <h2 className="text-xl font-semibold mb-4">Login</h2>
 
             <input

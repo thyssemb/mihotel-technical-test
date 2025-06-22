@@ -11,7 +11,7 @@ export interface LoginFormData {
     password: string;
 }
 
-export async function loginProfessor(formData: LoginFormData): Promise<any> {
+export default async function loginProfessor(formData: LoginFormData): Promise<any> {
     const res = await fetch(`${API_BACKEND_URL}/api/professors/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

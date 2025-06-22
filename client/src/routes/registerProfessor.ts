@@ -12,7 +12,7 @@ export interface FormData {
     password: string;
 }
 
-async function registerProfessor(formData: FormData): Promise<any> {
+export default async function registerProfessor(formData: FormData): Promise<any> {
     const res = await fetch(`${API_BACKEND_URL}/api/professors/register`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -24,7 +24,3 @@ async function registerProfessor(formData: FormData): Promise<any> {
     }
     return res.json();
 }
-
-export default registerProfessor;
-
-
