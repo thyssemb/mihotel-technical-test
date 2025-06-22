@@ -1,12 +1,13 @@
-import './App.css'
+import React from "react";
+import Layouts from "./layouts/Layouts.tsx";
+import HomePage from "./pages/HomePage";
 
-function App() {
+const App: React.FC = () => {
+    return (
+        <Layouts>
+            <HomePage />
+        </Layouts>
+    );
+};
 
-  return (
-    <>
-   app
-    </>
-  )
-}
-
-export default App
+export default App;
