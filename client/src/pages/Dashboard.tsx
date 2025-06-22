@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getLessons } from '../routes/lesson';
 
+import AddLessonCard from "../components/AddLessonCard.tsx";
+
 interface Lesson {
     subject?: string;
     level?: string;
@@ -49,10 +51,19 @@ const Dashboard = () => {
     }
 
     return (
-        <div className="container mx-auto p-4">
-            <h1 className="text-3xl font-bold mb-6">Your Lessons</h1>
+        <div
+            className="container mx-auto p-4 min-h-screen"
+            style={{
+                backgroundImage: `
+                    linear-gradient(to right, white 0%, transparent 15%, transparent 85%, white 100%),
+                    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16'><path d='M16 0H0V16' fill='none' stroke='%23ccc' stroke-width='0.5'/></svg>")
+                `,
+                backgroundRepeat: "repeat",
+            }}
+        >
+            <h1 className="font-extrabold italic uppercase text-black text-5xl md:text-6xl block">Your Lessons</h1>
             {lessons.length === 0 ? (
-                <p className="text-gray-600">You have no lessons posted.</p>
+                <p className="italic text-red-600 text-sm md:text-xl font-medium mt-4 whitespace-pre-wrap">(Oops, you have no lessons posted*)</p>
             ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     {lessons.map((lesson, index) => (
@@ -74,6 +85,7 @@ const Dashboard = () => {
                     ))}
                 </div>
             )}
+            <AddLessonCard/>
         </div>
     );
 };
