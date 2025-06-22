@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import loginProfessor from '../routes/registerProfessor.ts';
+import loginProfessor from '../routes/loginProfessor.ts';
 
 export default function LoginPage() {
     const navigate = useNavigate();
@@ -27,7 +27,7 @@ export default function LoginPage() {
             console.log('Login successful:', response);
 
             if (response.token) {
-                localStorage.setItem('AuthToken', response.token);
+                localStorage.setItem('token', response.token);
             }
 
             navigate('/dashboard');
