@@ -1,0 +1,47 @@
+# Compiled files
+*.class
+
+# Maven Build
+target/
+
+# Gradle Build
+build/
+
+# IDE (IntelliJ IDEA)
+.idea/
+*.iml
+*.iws
+out/
+
+# Eclipse
+.project
+.classpath
+.settings/
+
+# NetBeans
+nbproject/private/
+build/
+nbbuild/
+dist/
+.nb-gradle/
+
+# Logs
+*.log
+*.tmp
+*.temp
+*.swp
+*~
+
+# Locals config
+application.properties
+application.yml
+
+# Logs files
+logs/
+*.log
+
+# Spring Boot DevTools Folder
+.spring-boot-devtools
+
+# Dependencies Folder
+.gradle/
