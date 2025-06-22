@@ -13,15 +13,18 @@ public class JwtService {
     private final Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
     private final long expirationMs = 24 * 60 * 60 * 1000;
 
-    public String generateToken(String subject) {
+    public String generateToken(String email, String fullName) {
         Date now = new Date();
         Date expiryDate = new Date(now.getTime() + expirationMs);
 
         return Jwts.builder()
-                .setSubject(subject)
+                .setSubject(email)
+                .claim("fullName", fullName)
+                .claim("email", email)
                 .setIssuedAt(now)
                 .setExpiration(expiryDate)
                 .signWith(key)
                 .compact();
     }
+
 }
