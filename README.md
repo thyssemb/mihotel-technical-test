@@ -1,2 +1,65 @@
 # mihotel-technical-test
-Technical test for MiHotel, where I created a mini web application to manage listings in the domain indicated above. The application runs on a modern frontend (React.js &amp; Tailwind) and communicates with an API for all data creation, reading, modification, and deletion operations.
+
+Technical test for MiHotel, where I created a mini web application to manage listings in the domain indicated above. The application runs on a modern frontend (React.js & Tailwind CSS) and communicates with an API for all data creation, reading, modification, and deletion operations.
+
+---
+
+## Project Overview
+
+This project consists of two main parts:
+
+- **Frontend**:  
+  Built with **React.js**, styled using **Tailwind CSS**, and **GSAP** for animations.  
+  It provides a user interface to interact with private lessons listings.
+
+- **Backend API**:  
+  Developed using **Spring Boot** (Java 17).  
+  Provides RESTful endpoints for CRUD operations on the data.  
+  Includes OpenAPI/Swagger documentation for easy API exploration.
+
+---
+
+## Architecture
+
+The project follows the **MVC (Model-View-Controller)** architectural pattern:
+
+- **Model**:  
+  Represents the data layer with JPA entities and database (MySQL).  
+
+- **View**:  
+  The frontend React app that renders the UI and interacts with users.  
+
+- **Controller**:  
+  The Spring Boot REST controllers that handle HTTP requests and business logic.
+
+Data flows from the frontend to the backend and persists in the database, enabling seamless CRUD operations.
+
+---
+
+## Dependencies
+
+### Backend
+
+- Spring Boot Starter Web  
+- Spring Boot Starter Data JPA  
+- MySQL Connector  
+- Springdoc OpenAPI Starter WebMVC UI (Swagger UI)  
+- Lombok  
+- JJWT (JSON Web Token)  
+
+### Frontend
+
+- React.js  
+- Tailwind CSS  
+- GSAP (GreenSock Animation Platform)  
+
+---
+
+## Running the Project
+
+### Backend
+
+1. Configure MySQL connection in `application.properties`.  
+2. Run the backend with:  
+   ```bash
+   ./gradlew bootRun
