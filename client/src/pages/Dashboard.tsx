@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getLessons } from '../routes/lesson';
 
+import AddLessonCard from "../components/AddLessonCard.tsx";
+
 interface Lesson {
     subject?: string;
     level?: string;
@@ -83,6 +85,7 @@ const Dashboard = () => {
                     ))}
                 </div>
             )}
+            <AddLessonCard/>
         </div>
     );
 };

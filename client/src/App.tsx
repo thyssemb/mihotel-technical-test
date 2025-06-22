@@ -8,7 +8,6 @@ import HomePage from "./pages/HomePage";
 import Dashboard from "./pages/Dashboard.tsx";
 import CustomCursor from "./components/CustomCursor";
 
-// Si besoin, ici on détecte si le curseur est dans le footer (placeholder simple)
 const App: React.FC = () => {
     const [isInFooter, setIsInFooter] = useState(false);
 

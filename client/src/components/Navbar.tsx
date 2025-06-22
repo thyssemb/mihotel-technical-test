@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { gsap } from "gsap";
-import { User, Menu, X } from "lucide-react";
+import { User, LogOut, Menu, X } from "lucide-react";
 
 const parseJwt = (token: string) => {
     try {
@@ -14,9 +14,11 @@ const Navbar: React.FC = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
     const [fullName, setFullName] = useState("");
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const [showLogoutCard, setShowLogoutCard] = useState(false);
 
     const navRef = useRef<HTMLElement>(null);
     const mobileMenuRef = useRef<HTMLDivElement>(null);
+    const logoutCardRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         const token = localStorage.getItem("token");
@@ -51,6 +53,23 @@ const Navbar: React.FC = () => {
         }
     }, [isMobileMenuOpen]);
 
+    useEffect(() => {
+        if (showLogoutCard) {
+            gsap.fromTo(
+                logoutCardRef.current,
+                { opacity: 0, y: -10 },
+                { opacity: 1, y: 0, duration: 0.25, ease: "power2.out" }
+            );
+        } else if (logoutCardRef.current) {
+            gsap.to(logoutCardRef.current, {
+                opacity: 0,
+                y: -10,
+                duration: 0.2,
+                ease: "power2.in",
+            });
+        }
+    }, [showLogoutCard]);
+
     const MobileMenu = () => {
         if (isMobileMenuOpen) {
             gsap.to(mobileMenuRef.current, {
@@ -58,12 +77,23 @@ const Navbar: React.FC = () => {
                 y: -20,
                 duration: 0.3,
                 ease: "power2.in",
-                onComplete: () => setIsMobileMenuOpen(false)
+                onComplete: () => setIsMobileMenuOpen(false),
             });
         } else {
             setIsMobileMenuOpen(true);
         }
     };
+
+    const handleLogout = () => {
+        localStorage.removeItem("token");
+        setIsLoggedIn(false);
+        setFullName("");
+        setIsMobileMenuOpen(false);
+        setShowLogoutCard(false);
+    };
+
+    const onMouseEnterLogoutArea = () => setShowLogoutCard(true);
+    const onMouseLeaveLogoutArea = () => setShowLogoutCard(false);
 
     return (
         <>
@@ -74,7 +104,6 @@ const Navbar: React.FC = () => {
                 <div className="max-w-7xl mx-auto px-6 lg:px-8">
                     <div className="flex justify-between items-center h-16">
 
-                        {/* Center Navigation */}
                         <ul className="hidden md:flex items-center space-x-12 flex-1 justify-center">
                             <li>
                                 <a
@@ -94,17 +123,36 @@ const Navbar: React.FC = () => {
                             </li>
                         </ul>
 
-                        {/* Right Side - Auth */}
-                        <div className="flex items-center space-x-6">
-                            {/* Desktop Auth Buttons */}
-                            <div className="hidden md:flex items-center space-x-6">
+                        <div className="flex items-center space-x-6 relative">
+                            <div
+                                className="hidden md:flex items-center space-x-6 relative"
+                                onMouseEnter={onMouseEnterLogoutArea}
+                                onMouseLeave={onMouseLeaveLogoutArea}
+                            >
                                 {isLoggedIn ? (
-                                    <div className="flex items-center space-x-3">
-                                        <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-purple-600 rounded-full flex items-center justify-center">
-                                            <User className="w-4 h-4 text-white" />
+                                    <>
+                                        <div className="flex items-center space-x-3 cursor-pointer select-none">
+                                            <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-purple-600 rounded-full flex items-center justify-center">
+                                                <User className="w-4 h-4 text-white" />
+                                            </div>
+                                            <span className="text-gray-700 font-medium">Welcome, {fullName}</span>
                                         </div>
-                                        <span className="text-gray-700 font-medium">Welcome, {fullName}</span>
-                                    </div>
+
+                                        {showLogoutCard && (
+                                            <div
+                                                ref={logoutCardRef}
+                                                className="absolute top-full mt-2 right-0 w-32 bg-white rounded-md shadow-lg border border-gray-200 p-2 flex justify-center"
+                                            >
+                                                <button
+                                                    onClick={handleLogout}
+                                                    className="flex items-center space-x-2 text-red-600 hover:text-red-800 font-medium transition-colors duration-200"
+                                                >
+                                                    <LogOut className="w-4 h-4" />
+                                                    <span>Logout</span>
+                                                </button>
+                                            </div>
+                                        )}
+                                    </>
                                 ) : (
                                     <>
                                         <a
@@ -123,9 +171,11 @@ const Navbar: React.FC = () => {
                                 )}
                             </div>
 
+                            {/* Mobile Menu Toggle */}
                             <button
                                 onClick={MobileMenu}
                                 className="md:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors duration-200"
+                                aria-label="Toggle menu"
                             >
                                 {isMobileMenuOpen ? (
                                     <X className="w-5 h-5 text-gray-700" />
@@ -161,11 +211,20 @@ const Navbar: React.FC = () => {
 
                             <div className="pt-3 border-t border-gray-200/50">
                                 {isLoggedIn ? (
-                                    <div className="flex items-center space-x-3 py-2">
-                                        <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-purple-600 rounded-full flex items-center justify-center">
-                                            <User className="w-4 h-4 text-white" />
+                                    <div className="flex items-center justify-between py-2">
+                                        <div className="flex items-center space-x-3">
+                                            <div className="w-8 h-8 bg-gradient-to-br from-blue-600 to-purple-600 rounded-full flex items-center justify-center">
+                                                <User className="w-4 h-4 text-white" />
+                                            </div>
+                                            <span className="text-gray-700 font-medium">Welcome, {fullName}</span>
                                         </div>
-                                        <span className="text-gray-700 font-medium">Welcome, {fullName}</span>
+                                        <button
+                                            onClick={handleLogout}
+                                            className="flex items-center space-x-2 text-red-600 hover:text-red-800 font-medium transition-colors duration-200"
+                                        >
+                                            <LogOut className="w-4 h-4" />
+                                            <span>Logout</span>
+                                        </button>
                                     </div>
                                 ) : (
                                     <div className="space-y-3">

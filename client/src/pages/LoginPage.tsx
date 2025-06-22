@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import loginProfessor from '../routes/loginProfessor.ts';
 
@@ -40,39 +40,53 @@ export default function LoginPage() {
     };
 
     return (
-        <form onSubmit={handleSubmit} className="p-4 bg-white rounded shadow max-w-md mx-auto mt-10">
-            <p>Please login to activate your account.</p>
-            <h2 className="text-xl font-semibold mb-4">Login</h2>
-
-            <input
-                name="email"
-                type="email"
-                placeholder="Email"
-                value={form.email}
-                onChange={handleChange}
-                className="block w-full mb-2 p-2 border rounded"
-                required
-            />
-
-            <input
-                name="password"
-                type="password"
-                placeholder="Password"
-                value={form.password}
-                onChange={handleChange}
-                className="block w-full mb-4 p-2 border rounded"
-                required
-            />
-
-            {error && <p className="text-red-500 mb-4">{error}</p>}
-
-            <button
-                type="submit"
-                disabled={loading}
-                className="bg-orange-500 text-white px-4 py-2 rounded hover:bg-orange-600 disabled:opacity-50"
+        <div
+            className="flex justify-center px-4"
+            style={{
+                backgroundImage: `
+                    linear-gradient(to right, white 0%, transparent 15%, transparent 85%, white 100%),
+                    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16'><path d='M16 0H0V16' fill='none' stroke='%23ccc' stroke-width='0.5'/></svg>")
+                `,
+                backgroundRepeat: "repeat",
+            }}
+        >
+            <form
+                onSubmit={handleSubmit}
+                className="p-6 bg-white rounded shadow mt-10 max-w-md w-full"
             >
-                {loading ? 'Logging in...' : 'Login'}
-            </button>
-        </form>
+                <h1 className="font-extrabold italic mb-4 uppercase text-black text-5xl md:text-6xl block">LOGIN</h1>
+                <p className="mb-4 text-gray-700">Please login to activate your account.</p>
+
+                <input
+                    name="email"
+                    type="email"
+                    placeholder="Example@hotmail.com"
+                    value={form.email}
+                    onChange={handleChange}
+                    className="block w-full mb-4 p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-orange-400"
+                    required
+                />
+
+                <input
+                    name="password"
+                    type="password"
+                    placeholder="***********"
+                    value={form.password}
+                    onChange={handleChange}
+                    className="block w-full mb-6 p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-orange-400"
+                    required
+                />
+
+                {error && <p className="text-red-500 mb-4">{error}</p>}
+
+                <button
+                    type="submit"
+                    disabled={loading}
+                    className="text-black px-4 py-2 rounded w-full"
+                >
+                    {loading ? 'Logging in...' : 'Login'}
+                </button>
+            </form>
+        </div>
     );
 }
