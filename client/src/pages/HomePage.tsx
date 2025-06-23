@@ -8,7 +8,7 @@ const HomePage: React.FC = () => {
     const descriptionText =
         "Technical test for MiHotel, where I created a mini " +
         "web application to manage professor authentification and lessons listing. " +
-        "The application runs on a modern frontend (React.js & Tailwind CSS) and communicates with a gSpringBoot API for all data creation, reading, modification, and deletion operations.";
+        "The application runs on a modern frontend (React.js & Tailwind CSS) and communicates with a SpringBoot API for all data creation, reading, modification, and deletion operations.";
 
     const typeText = (
         el: HTMLDivElement,

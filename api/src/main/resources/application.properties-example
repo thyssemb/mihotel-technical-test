@@ -14,6 +14,9 @@ springdoc.swagger-ui.path=/swagger
 # Allow Hibernate to automatically create the tables for the DB
 spring.jpa.hibernate.ddl-auto=update
 
+# Server Port
+server.port=
+
 # JWT Properties
 jwt.secret=
 
