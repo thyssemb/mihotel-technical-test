@@ -20,6 +20,7 @@ const AddLessonCard: React.FC = () => {
 
         try {
             const token = localStorage.getItem("token");
+            console.log(token);
             if (!token) throw new Error("Token missing");
 
             await createLesson(token, {

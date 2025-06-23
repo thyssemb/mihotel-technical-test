@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
 public class JwtService extends OncePerRequestFilter {
 
     private final Key key;
-    private final long expirationMs = 24 * 60 * 60 * 1000;
+    private final long expirationMs = 7 * 24 * 60 * 60 * 1000;
 
     public JwtService(@Value("${jwt.secret}") String secret) {
         this.key = Keys.hmacShaKeyFor(secret.getBytes());
