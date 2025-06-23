@@ -1,10 +1,11 @@
 //***//
-// File to handle lesson CRUD API calls
-// Contains functions to fetch and create lessons from the backend
+// File to handle lesson crud API calls
+// Contains the function to display all lessons with their informations by sending credentials to the backend
 // Uses environment variable VITE_API_BACKEND_URL for backend base URL
 //***//
 
 const API_BACKEND_URL = import.meta.env.VITE_API_BACKEND_URL as string;
+console.log(API_BACKEND_URL);
 
 export interface LessonFormData {
     subject?: string;
@@ -50,5 +51,9 @@ export async function createLesson(token: string, data: LessonFormData): Promise
 }
 
 export async function updateLesson(token: string, data: LessonFormData): Promise<any> {
-    
+
+}
+
+export async function deleteLesson(token: string, data: LessonFormData): Promise<any> {
+
 }

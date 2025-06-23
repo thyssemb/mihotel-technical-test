@@ -61,13 +61,13 @@ const Dashboard = () => {
                 backgroundRepeat: "repeat",
             }}
         >
-            <h1 className="font-extrabold italic uppercase text-black text-5xl md:text-6xl block">Your Lessons</h1>
+            <h1 className="font-extrabold italic mb-5 uppercase text-black text-5xl md:text-6xl block">Your Lessons</h1>
             {lessons.length === 0 ? (
                 <p className="italic text-red-600 text-sm md:text-xl font-medium mt-4 whitespace-pre-wrap">(Oops, you have no lesson posted yet*)</p>
             ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     {lessons.map((lesson, index) => (
-                        <div key={index} className="bg-white p-4 rounded-lg shadow-md">
+                        <div key={index} className="relative bg-white p-4 rounded-lg shadow-md">
                             <h2 className="text-xl font-semibold mb-2">{lesson.subject}</h2>
                             <p className="text-gray-700 mb-1">
                                 <strong>Level:</strong> {lesson.level}
@@ -81,8 +81,31 @@ const Dashboard = () => {
                             <p className="text-gray-700">
                                 <strong>Description:</strong> {lesson.description}
                             </p>
+                            <div
+                                className="absolute bottom-3 right-3 flex items-center justify-center w-14 h-14 rounded-full border border-black bg-transparent cursor-pointer group"
+                                title="See details"
+                                style={{ userSelect: 'none' }}
+                            >
+                                <svg
+                                    className="w-6 h-6 text-black"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    strokeWidth="2"
+                                    viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M7 17l7-7m0 0H7m7 0v7" />
+                                </svg>
+                                <span
+                                    className="absolute bottom-full mb-1 right-0 bg-black text-white text-xs rounded px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none select-none"
+                                    style={{ whiteSpace: 'nowrap' }}
+                                >
+        See details
+      </span>
+                            </div>
                         </div>
                     ))}
+
                 </div>
             )}
             <AddLessonCard/>
