@@ -49,3 +49,11 @@ export async function createLesson(token: string, data: LessonFormData): Promise
 
     return await res.json();
 }
+
+export async function updateLesson(token: string, data: LessonFormData): Promise<any> {
+
+}
+
+export async function deleteLesson(token: string, data: LessonFormData): Promise<any> {
+
+}
