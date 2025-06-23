@@ -61,7 +61,7 @@ const Dashboard = () => {
                 backgroundRepeat: "repeat",
             }}
         >
-            <h1 className="font-extrabold italic uppercase text-black text-5xl md:text-6xl block">Your Lessons</h1>
+            <h1 className="font-extrabold italic mb-5 uppercase text-black text-5xl md:text-6xl block">Your Lessons</h1>
             {lessons.length === 0 ? (
                 <p className="italic text-red-600 text-sm md:text-xl font-medium mt-4 whitespace-pre-wrap">(Oops, you have no lesson posted yet*)</p>
             ) : (
