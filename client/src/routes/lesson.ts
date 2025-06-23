@@ -5,6 +5,7 @@
 //***//
 
 const API_BACKEND_URL = import.meta.env.VITE_API_BACKEND_URL as string;
+console.log(API_BACKEND_URL);
 
 export interface LessonFormData {
     subject?: string;
