@@ -16,7 +16,7 @@ export interface LessonFormData {
 }
 
 export async function getLessons(token: string): Promise<any> {
-    const res = await fetch(`${API_BACKEND_URL}/api/professors/lessons`, {
+    const res = await fetch(`${API_BACKEND_URL}/api/lessons`, {
         method: 'GET',
         headers: {
             'Authorization': `Bearer ${token}`,
@@ -33,7 +33,7 @@ export async function getLessons(token: string): Promise<any> {
 }
 
 export async function createLesson(token: string, data: LessonFormData): Promise<any> {
-    const res = await fetch(`${API_BACKEND_URL}/api/professors/lessons`, {
+    const res = await fetch(`${API_BACKEND_URL}/api/lessons`, {
         method: 'POST',
         headers: {
             'Authorization': `Bearer ${token}`,

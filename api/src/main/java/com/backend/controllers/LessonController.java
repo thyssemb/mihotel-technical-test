@@ -18,8 +18,8 @@ import java.security.Principal;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/professors/lessons")
-@Tag(name = "Lesson API", description = "Endpoints for retrieving, creating, update and delete lessons")
+@RequestMapping("/api/lessons")
+@Tag(name = "Lesson API", description = "Endpoints for retrieving, creating, update and deletet lessons")
 @ApiResponses(value = {
         @ApiResponse(responseCode = "404", description = "Lesson API route not found", content = @Content(mediaType = "application/json")),
         @ApiResponse(responseCode = "500", description = "Internal server error", content = @Content(mediaType = "application/json"))
