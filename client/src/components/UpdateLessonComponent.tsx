@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { updateLesson } from "../routes/lesson.ts";
 
 const UpdateLessonComponent: React.FC = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -11,39 +10,6 @@ const UpdateLessonComponent: React.FC = () => {
         description: '',
     });
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        setForm({ ...form, [e.target.name]: e.target.value });
-    };
-
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-
-        try {
-            const token = localStorage.getItem("token");
-            console.log(token);
-            if (!token) throw new Error("Token missing");
-
-            await updateLesson(token, {
-                subject: form.subject,
-                level: form.level,
-                price: parseFloat(form.price),
-                location: form.location,
-                description: form.description,
-            });
-
-            alert("Lesson added with success");
-            setIsModalOpen(false);
-            setForm({
-                subject: '',
-                level: '',
-                price: '',
-                location: '',
-                description: '',
-            });
-        } catch (err) {
-            alert("Error with creating a lesson : " + err);
-        }
-    };
 
     return (
         <>
