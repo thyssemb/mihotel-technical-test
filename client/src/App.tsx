@@ -5,8 +5,10 @@ import Layouts from "./layouts/Layouts.tsx";
 import RegisterPage from "./pages/RegisterPage.tsx";
 import LoginPage from "./pages/LoginPage.tsx";
 import HomePage from "./pages/HomePage";
+import LessonDetails from "./pages/LessonDetails.tsx";
 import Dashboard from "./pages/Dashboard.tsx";
 import CustomCursor from "./components/CustomCursor";
+
 
 const App: React.FC = () => {
     const [isInFooter, setIsInFooter] = useState(false);
@@ -30,6 +32,7 @@ const App: React.FC = () => {
                     <Route path="/register" element={<RegisterPage />} />
                     <Route path="/login" element={<LoginPage />} />
                     <Route path="/dashboard" element={<Dashboard />} />
+                    <Route path="/lessons/:lessonId" element={<LessonDetails />} />
                 </Routes>
             </Layouts>
         </>

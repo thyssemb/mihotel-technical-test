@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { getLessons } from "../routes/lesson.ts";
 import AddLessonCard from "../components/AddLessonCard.tsx";
 import DeleteLessonComponent from "../components/DeleteLessonComponent.tsx";
 
 interface Lesson {
+    id: number;  // Ajout de l'id ici
     subject?: string;
     level?: string;
     price?: number;
@@ -17,6 +18,8 @@ const Dashboard = () => {
     const [lessons, setLessons] = useState<Lesson[]>([]);
     const [error, setError] = useState<string | null>(null);
     const [loading, setLoading] = useState(true);
+
+    const [selectedLessonIndex, setSelectedLessonIndex] = useState<number | null>(null);
 
     const fetchLessons = async () => {
         const token = localStorage.getItem('token');
@@ -40,7 +43,7 @@ const Dashboard = () => {
     }, [navigate]);
 
     const handleDeleteSuccess = () => {
-        fetchLessons(); // Refresh the list after deletion
+        fetchLessons();
     };
 
     if (loading) {
@@ -68,28 +71,24 @@ const Dashboard = () => {
             ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     {lessons.map((lesson, index) => (
-                        <div key={index} className="relative bg-white p-4 rounded-lg shadow-md">
+                        <div key={lesson.id} className="relative bg-white p-4 rounded-lg shadow-md">
                             <DeleteLessonComponent
-                                lessonSubject={lesson.subject || ''}
+                                lessonId={lesson.id}
                                 onDeleteSuccess={handleDeleteSuccess}
                             />
                             <h2 className="text-xl font-semibold mb-2">{lesson.subject}</h2>
-                            <p className="text-gray-700 mb-1">
-                                <strong>Level:</strong> {lesson.level}
-                            </p>
-                            <p className="text-gray-700 mb-1">
-                                <strong>Price:</strong> ${lesson.price}
-                            </p>
-                            <p className="text-gray-700 mb-1">
-                                <strong>Location:</strong> {lesson.location}
-                            </p>
-                            <p className="text-gray-700">
-                                <strong>Description:</strong> {lesson.description}
-                            </p>
+
+                            {selectedLessonIndex === index && (
+                                <p className="text-gray-800 mt-2">
+                                    <strong>Description:</strong> {lesson.description || 'No description available.'}
+                                </p>
+                            )}
+
                             <div
                                 className="absolute bottom-3 right-3 flex items-center justify-center w-14 h-14 rounded-full border border-black bg-transparent cursor-pointer group"
                                 title="See details"
                                 style={{ userSelect: 'none' }}
+                                onClick={() => navigate(`/lessons/${lesson.id}`)}
                             >
                                 <svg
                                     className="w-6 h-6 text-black"
@@ -113,9 +112,6 @@ const Dashboard = () => {
                 </div>
             )}
             <AddLessonCard />
-            <DeleteLessonComponent lessonSubject={""} onDeleteSuccess={function(): void {
-                throw new Error("Function not implemented.");
-            } } />
         </div>
     );
 };
