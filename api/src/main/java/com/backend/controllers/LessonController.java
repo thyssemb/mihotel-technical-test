@@ -37,16 +37,22 @@ public class LessonController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successfully retrieved list of lessons")
     })
-    public ResponseEntity<List<Lesson>> getAllLessons() {
-        return ResponseEntity.ok(lessonRepository.findAll());
-    }
+   public ResponseEntity<List<Lesson>> getLessonsByProfessor(Principal principal) {
+       String email = principal.getName();
+       ProfessorEntities professor = professorRepository.findByEmail(email)
+               .orElseThrow(() -> new RuntimeException("Professor not found : " + email));
+
+       List<Lesson> lessons = lessonRepository.findByProfessor(professor);
+       return ResponseEntity.ok(lessons);
+   }
 
     @PostMapping
     @Operation(summary = "Create a new lesson (requires authenticated professor)")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successfully created lesson"),
             @ApiResponse(responseCode = "400", description = "Invalid request", content = @Content),
-            @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content)
+            @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
+            @ApiResponse(responseCode = "403", description = "Invalid credentials", content = @Content)
     })
     public ResponseEntity<Lesson> createLesson(@RequestBody LessonRequest request, Principal principal) {
         String email = principal.getName();
@@ -65,10 +71,32 @@ public class LessonController {
     }
 
     @DeleteMapping
-    @Operation(summary : "Delete a lesson (requires authenticated professor and a valid lesson to delete)")
+    @Operation(summary = "Delete a lesson (requires authenticated professor and a valid lesson to delete)")
     @ApiResponses(value = {
-                @ApiResponse(responseCode = "200", description = "Successfully deleted lesson"),
-                @ApiResponse(responseCode = "400", description = "Invalid request", content = @Content),
-                @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content)
+        @ApiResponse(responseCode = "200", description = "Successfully deleted lesson"),
+        @ApiResponse(responseCode = "400", description = "Invalid request", content = @Content),
+        @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
+        @ApiResponse(responseCode = "403", description = "Invalid credentials", content = @Content),
+        @ApiResponse(responseCode = "404", description = "Lesson not found", content = @Content)
     })
+    public ResponseEntity<?> deleteLesson(@RequestBody LessonRequest request, Principal principal) {
+        if (request.getSubject() == null || request.getSubject().isBlank()) {
+            return ResponseEntity.badRequest().body("Subject is required to delete a lesson");
+        }
+
+        String email = principal.getName();
+        ProfessorEntities professor = professorRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Professor not found : " + email));
+
+        Lesson lesson = lessonRepository.findBySubjectAndProfessor(request.getSubject(), professor)
+                .orElse(null);
+
+        if (lesson == null) {
+            return ResponseEntity.status(404).body("Lesson not found or does not belong to the authenticated professor");
+        }
+
+        lessonRepository.delete(lesson);
+        return ResponseEntity.ok("Lesson deleted successfully");
+    }
+
 }
