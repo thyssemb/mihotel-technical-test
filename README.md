@@ -1,6 +1,6 @@
 # mihotel-technical-test
 
-Technical test for MiHotel, where I created a mini web application to manage a private lesson listing site. The application runs on a modern UI (React.js and Tailwind CSS) and communicates with a Java / Spring boot API for all data creation, reading, modification and deletion operations.
+Technical test for MiHotel (Lyon), where I created a mini web application to manage a private lesson listing site. The application runs on a modern UI (React.js and Tailwind CSS) and communicates with a Java / Spring boot API for all data creation, reading, modification and deletion operations.
 ---
 
 ## Project Overview
