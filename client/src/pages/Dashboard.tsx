@@ -5,7 +5,7 @@ import AddLessonCard from "../components/AddLessonCard.tsx";
 import DeleteLessonComponent from "../components/DeleteLessonComponent.tsx";
 
 interface Lesson {
-    id: number;  // Ajout de l'id ici
+    id: number;
     subject?: string;
     level?: string;
     price?: number;
@@ -18,7 +18,6 @@ const Dashboard = () => {
     const [lessons, setLessons] = useState<Lesson[]>([]);
     const [error, setError] = useState<string | null>(null);
     const [loading, setLoading] = useState(true);
-
     const [selectedLessonIndex, setSelectedLessonIndex] = useState<number | null>(null);
 
     const fetchLessons = async () => {
@@ -71,11 +70,32 @@ const Dashboard = () => {
             ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     {lessons.map((lesson, index) => (
-                        <div key={lesson.id} className="relative bg-white p-4 rounded-lg shadow-md">
-                            <DeleteLessonComponent
-                                lessonId={lesson.id}
-                                onDeleteSuccess={handleDeleteSuccess}
-                            />
+                        <div key={lesson.id} className="relative  flex items bg-white p-6 min-h-[120px] rounded-lg shadow-md">
+                            <div
+                                className="absolute top-2 right-10 cursor-pointer group p-1 rounded hover:bg-gray-100 transition"
+                                title="Edit lesson"
+                                onClick={() => navigate(`/edit-lesson/${lesson.id}`)}
+                            >
+                                <svg
+                                    className="w-5 h-5 text-gray-600 group-hover:text-black"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    strokeWidth="2"
+                                    viewBox="0 0 24 24"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
+                                    <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        d="M15.232 5.232l3.536 3.536M9 11l6.586-6.586a2 2 0 112.828 2.828L11.828 13.828a2 2 0 01-1.414.586H9v-2.414a2 2 0 01.586-1.414z"
+                                    />
+                                </svg>
+                            </div>
+
+                            <div className="absolute top-2 right-2">
+                                <DeleteLessonComponent lessonId={lesson.id} onDeleteSuccess={handleDeleteSuccess}/>
+                            </div>
+
                             <h2 className="text-xl font-semibold mb-2">{lesson.subject}</h2>
 
                             {selectedLessonIndex === index && (
@@ -87,7 +107,7 @@ const Dashboard = () => {
                             <div
                                 className="absolute bottom-3 right-3 flex items-center justify-center w-14 h-14 rounded-full border border-black bg-transparent cursor-pointer group"
                                 title="See details"
-                                style={{ userSelect: 'none' }}
+                                style={{userSelect: 'none'}}
                                 onClick={() => navigate(`/lessons/${lesson.id}`)}
                             >
                                 <svg
@@ -98,20 +118,21 @@ const Dashboard = () => {
                                     viewBox="0 0 24 24"
                                     xmlns="http://www.w3.org/2000/svg"
                                 >
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M7 17l7-7m0 0H7m7 0v7" />
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M7 17l7-7m0 0H7m7 0v7"/>
                                 </svg>
                                 <span
                                     className="absolute bottom-full mb-1 right-0 bg-black text-white text-xs rounded px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none select-none"
-                                    style={{ whiteSpace: 'nowrap' }}
+                                    style={{whiteSpace: 'nowrap'}}
                                 >
-                                    See details
-                                </span>
+            See details
+        </span>
                             </div>
                         </div>
+
                     ))}
                 </div>
             )}
-            <AddLessonCard />
+            <AddLessonCard/>
         </div>
     );
 };
