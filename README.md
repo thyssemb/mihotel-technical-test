@@ -1,7 +1,6 @@
 # mihotel-technical-test
 
-Technical test for MiHotel, where I created a mini web application to manage listings in the domain indicated above. The application runs on a modern frontend (React.js & Tailwind CSS) and communicates with an API for all data creation, reading, modification, and deletion operations.
-
+Technical test for MiHotel, where I created a mini web application to manage a private lesson listing site. The application runs on a modern UI (React.js and Tailwind CSS) and communicates with a Java / Spring boot API for all data creation, reading, modification and deletion operations.
 ---
 
 ## Project Overview
@@ -16,6 +15,7 @@ This project consists of two main parts:
   Developed using **Spring Boot** (Java 17).  
   Provides RESTful endpoints for CRUD operations on the data.  
   Includes OpenAPI/Swagger documentation for easy API exploration.
+  Inclues Spring Security to configure authentication and authorization with a JWT.
 
 ---
 
