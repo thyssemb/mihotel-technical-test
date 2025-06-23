@@ -50,10 +50,6 @@ export async function createLesson(token: string, data: LessonFormData): Promise
     return await response.json();
 }
 
-export async function updateLesson(token: string, data: LessonFormData): Promise<any> {
-
-}
-
 export async function deleteLesson(token: string, data: LessonFormData): Promise<any> {
     if (!data.subject) {
         throw new Error("Subject is required to delete a lesson");
