@@ -50,7 +50,7 @@ export default function RegisterPage() {
                     placeholder="Type your name"
                     value={form.name}
                     onChange={handleChange}
-                    className="block w-full mb-3 p-3 border rounded focus:outline-none focus:ring-2 focus:ring-orange-400"
+                    className="block w-full mb-3 p-3 border rounded focus:outline-none focus:ring-2"
                     required
                 />
                 <input
@@ -59,7 +59,7 @@ export default function RegisterPage() {
                     placeholder="Example@hotmail.com"
                     value={form.email}
                     onChange={handleChange}
-                    className="block w-full mb-3 p-3 border rounded focus:outline-none focus:ring-2 focus:ring-orange-400"
+                    className="block w-full mb-3 p-3 border rounded focus:outline-none focus:ring-2"
                     required
                 />
                 <input
@@ -68,7 +68,7 @@ export default function RegisterPage() {
                     placeholder="***********"
                     value={form.password}
                     onChange={handleChange}
-                    className="block w-full mb-6 p-3 border rounded focus:outline-none focus:ring-2 focus:ring-orange-400"
+                    className="block w-full mb-6 p-3 border rounded focus:outline-none focus:ring-2"
                     required
                 />
 

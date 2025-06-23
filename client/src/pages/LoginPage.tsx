@@ -63,7 +63,7 @@ export default function LoginPage() {
                     placeholder="Example@hotmail.com"
                     value={form.email}
                     onChange={handleChange}
-                    className="block w-full mb-4 p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-orange-400"
+                    className="block w-full mb-4 p-2 border border-gray-300 rounded focus:outline-none focus:ring-2"
                     required
                 />
 
@@ -73,7 +73,7 @@ export default function LoginPage() {
                     placeholder="***********"
                     value={form.password}
                     onChange={handleChange}
-                    className="block w-full mb-6 p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-orange-400"
+                    className="block w-full mb-6 p-2 border border-gray-300 rounded focus:outline-none focus:ring-2"
                     required
                 />
 
