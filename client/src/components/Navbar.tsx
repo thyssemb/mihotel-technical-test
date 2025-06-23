@@ -20,33 +20,50 @@ const Navbar: React.FC = () => {
     const mobileMenuRef = useRef<HTMLDivElement>(null);
     const logoutCardRef = useRef<HTMLDivElement>(null);
 
-    useEffect(() => {
+    // Met à jour l'état à chaque rendu et écoute les changements du token dans localStorage
+    const checkToken = () => {
         const token = localStorage.getItem("token");
         if (token) {
             const payload = parseJwt(token);
             if (payload && payload.fullName) {
                 setIsLoggedIn(true);
                 setFullName(payload.fullName);
-            } else {
-                setIsLoggedIn(false);
-                setFullName("");
+                return;
             }
-        } else {
-            setIsLoggedIn(false);
-            setFullName("");
         }
+        setIsLoggedIn(false);
+        setFullName("");
+    };
+
+    useEffect(() => {
+        checkToken();
+
+        // Écoute des changements de localStorage (ex : déconnexion dans un autre onglet)
+        const onStorageChange = (e: StorageEvent) => {
+            if (e.key === "token") {
+                checkToken();
+            }
+        };
+        window.addEventListener("storage", onStorageChange);
+
+        return () => {
+            window.removeEventListener("storage", onStorageChange);
+        };
     }, []);
 
     useEffect(() => {
         const tl = gsap.timeline();
+        if (!navRef.current) return;
 
-        tl.fromTo(navRef.current,
+        tl.fromTo(
+            navRef.current,
             { y: -100, opacity: 0 },
             { y: 0, opacity: 1, duration: 1, ease: "power3.out" }
         );
 
-        if (isMobileMenuOpen) {
-            gsap.fromTo(mobileMenuRef.current,
+        if (isMobileMenuOpen && mobileMenuRef.current) {
+            gsap.fromTo(
+                mobileMenuRef.current,
                 { opacity: 0, y: -20 },
                 { opacity: 1, y: 0, duration: 0.3, ease: "power2.out" }
             );
@@ -54,13 +71,15 @@ const Navbar: React.FC = () => {
     }, [isMobileMenuOpen]);
 
     useEffect(() => {
+        if (!logoutCardRef.current) return;
+
         if (showLogoutCard) {
             gsap.fromTo(
                 logoutCardRef.current,
                 { opacity: 0, y: -10 },
                 { opacity: 1, y: 0, duration: 0.25, ease: "power2.out" }
             );
-        } else if (logoutCardRef.current) {
+        } else {
             gsap.to(logoutCardRef.current, {
                 opacity: 0,
                 y: -10,
@@ -70,8 +89,8 @@ const Navbar: React.FC = () => {
         }
     }, [showLogoutCard]);
 
-    const MobileMenu = () => {
-        if (isMobileMenuOpen) {
+    const toggleMobileMenu = () => {
+        if (isMobileMenuOpen && mobileMenuRef.current) {
             gsap.to(mobileMenuRef.current, {
                 opacity: 0,
                 y: -20,
@@ -92,9 +111,6 @@ const Navbar: React.FC = () => {
         setShowLogoutCard(false);
     };
 
-    const onMouseEnterLogoutArea = () => setShowLogoutCard(true);
-    const onMouseLeaveLogoutArea = () => setShowLogoutCard(false);
-
     return (
         <>
             <nav
@@ -103,7 +119,6 @@ const Navbar: React.FC = () => {
             >
                 <div className="max-w-7xl mx-auto px-6 lg:px-8">
                     <div className="flex justify-between items-center h-16">
-
                         <ul className="hidden md:flex items-center space-x-12 flex-1 justify-center">
                             <li>
                                 <a
@@ -126,8 +141,8 @@ const Navbar: React.FC = () => {
                         <div className="flex items-center space-x-6 relative">
                             <div
                                 className="hidden md:flex items-center space-x-6 relative"
-                                onMouseEnter={onMouseEnterLogoutArea}
-                                onMouseLeave={onMouseLeaveLogoutArea}
+                                onMouseEnter={() => setShowLogoutCard(true)}
+                                onMouseLeave={() => setShowLogoutCard(false)}
                             >
                                 {isLoggedIn ? (
                                     <>
@@ -173,7 +188,7 @@ const Navbar: React.FC = () => {
 
                             {/* Mobile Menu Toggle */}
                             <button
-                                onClick={MobileMenu}
+                                onClick={toggleMobileMenu}
                                 className="md:hidden p-2 rounded-lg hover:bg-gray-100 transition-colors duration-200"
                                 aria-label="Toggle menu"
                             >
