@@ -6,6 +6,8 @@ Technical test for MiHotel (Lyon), where I created a mini web application to man
 
 **API Documentation Swagger UI:** http://localhost:8080/swagger-ui/index.html
 
+**Postman for Endpoint Testing:** [https://speeding-astronaut-176853.postman.co/workspace/thyssem~7fbd0bf8-328a-4815-9608-df2889e67e99/collection/33911202-7767c1f3-964a-4189-8ed0-81a91a849a8c?action=share&creator=33911202](https://www.postman.com/speeding-astronaut-176853/workspace/mihotel/collection/33911202-7767c1f3-964a-4189-8ed0-81a91a849a8c?action=share&creator=33911202)
+
 ---
 
 ## Project Overview
