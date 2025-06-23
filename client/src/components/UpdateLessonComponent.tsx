@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { createLesson } from "../routes/lesson.ts";
+import { updateLesson } from "../routes/lesson.ts";
 
-const AddLessonCard: React.FC = () => {
+const UpdateLessonComponent: React.FC = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [form, setForm] = useState({
         subject: '',
@@ -20,9 +20,10 @@ const AddLessonCard: React.FC = () => {
 
         try {
             const token = localStorage.getItem("token");
+            console.log(token);
             if (!token) throw new Error("Token missing");
 
-            await createLesson(token, {
+            await updateLesson(token, {
                 subject: form.subject,
                 level: form.level,
                 price: parseFloat(form.price),
@@ -55,7 +56,7 @@ const AddLessonCard: React.FC = () => {
                     if (e.key === 'Enter') setIsModalOpen(true);
                 }}
             >
-                Add a Lesson
+                Update a Lesson
             </div>
 
             {isModalOpen && (
@@ -124,4 +125,4 @@ const AddLessonCard: React.FC = () => {
     );
 };
 
-export default AddLessonCard;
+export default UpdateLessonComponent;

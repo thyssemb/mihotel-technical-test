@@ -63,4 +63,12 @@ public class LessonController {
 
         return ResponseEntity.ok(lessonRepository.save(lesson));
     }
+
+    @DeleteMapping
+    @Operation(summary : "Delete a lesson (requires authenticated professor and a valid lesson to delete)")
+    @ApiResponses(value = {
+                @ApiResponse(responseCode = "200", description = "Successfully deleted lesson"),
+                @ApiResponse(responseCode = "400", description = "Invalid request", content = @Content),
+                @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content)
+    })
 }

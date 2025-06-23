@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from"react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getLessons } from "../routes/lesson.ts";
-
 import AddLessonCard from "../components/AddLessonCard.tsx";
+import UpdateLessonComponent from "../components/UpdateLessonComponent.tsx";
+import DeleteLessonComponent from "../components/DeleteLessonComponent.tsx";
 
 interface Lesson {
     subject?: string;
@@ -18,29 +19,30 @@ const Dashboard = () => {
     const [error, setError] = useState<string | null>(null);
     const [loading, setLoading] = useState(true);
 
+    const fetchLessons = async () => {
+        const token = localStorage.getItem('token');
+        if (!token) {
+            navigate('/login');
+            return;
+        }
+        try {
+            const data = await getLessons(token);
+            setLessons(data);
+        } catch (err: any) {
+            console.error(err);
+            setError(err.message || 'Failed to fetch lessons');
+        } finally {
+            setLoading(false);
+        }
+    };
+
     useEffect(() => {
-        const fetchLessons = async () => {
-            const token = localStorage.getItem('token');
-            console.log(token);
-
-            if (!token) {
-                navigate('/login');
-                return;
-            }
-
-            try {
-                const data = await getLessons(token);
-                setLessons(data);
-            } catch (err: any) {
-                console.error(err);
-                setError(err.message || 'Failed to fetch lessons');
-            } finally {
-                setLoading(false);
-            }
-        };
-
         fetchLessons();
     }, [navigate]);
+
+    const handleDeleteSuccess = () => {
+        fetchLessons(); // Refresh the list after deletion
+    };
 
     if (loading) {
         return <div className="text-center p-4">Loading...</div>;
@@ -68,6 +70,10 @@ const Dashboard = () => {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     {lessons.map((lesson, index) => (
                         <div key={index} className="relative bg-white p-4 rounded-lg shadow-md">
+                            <DeleteLessonComponent
+                                lessonSubject={lesson.subject || ''}
+                                onDeleteSuccess={handleDeleteSuccess}
+                            />
                             <h2 className="text-xl font-semibold mb-2">{lesson.subject}</h2>
                             <p className="text-gray-700 mb-1">
                                 <strong>Level:</strong> {lesson.level}
@@ -100,15 +106,15 @@ const Dashboard = () => {
                                     className="absolute bottom-full mb-1 right-0 bg-black text-white text-xs rounded px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none select-none"
                                     style={{ whiteSpace: 'nowrap' }}
                                 >
-        See details
-      </span>
+                                    See details
+                                </span>
                             </div>
                         </div>
                     ))}
-
                 </div>
             )}
-            <AddLessonCard/>
+            <AddLessonCard />
+            <UpdateLessonComponent />
         </div>
     );
 };

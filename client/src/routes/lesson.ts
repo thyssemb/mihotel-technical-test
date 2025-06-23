@@ -33,7 +33,7 @@ export async function getLessons(token: string): Promise<any> {
 }
 
 export async function createLesson(token: string, data: LessonFormData): Promise<any> {
-    const res = await fetch(`${API_BACKEND_URL}/api/lessons`, {
+    const response = await fetch(`${API_BACKEND_URL}/api/lessons`, {
         method: 'POST',
         headers: {
             'Authorization': `Bearer ${token}`,
@@ -42,12 +42,12 @@ export async function createLesson(token: string, data: LessonFormData): Promise
         body: JSON.stringify(data),
     });
 
-    if (!res.ok) {
-        const errorText = await res.text();
+    if (!response.ok) {
+        const errorText = await response.text();
         throw new Error(`Failed to create lesson: ${errorText}`);
     }
 
-    return await res.json();
+    return await response.json();
 }
 
 export async function updateLesson(token: string, data: LessonFormData): Promise<any> {
@@ -55,5 +55,24 @@ export async function updateLesson(token: string, data: LessonFormData): Promise
 }
 
 export async function deleteLesson(token: string, data: LessonFormData): Promise<any> {
+    if (!data.subject) {
+        throw new Error("Subject is required to delete a lesson");
+    }
 
+    const response = await fetch(`${API_BACKEND_URL}/api/lessons`, {
+        method: 'DELETE',
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    });
+
+    if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`Failed to delete lesson: ${errorText}`);
+    }
+
+    return await response.json();
 }
+
