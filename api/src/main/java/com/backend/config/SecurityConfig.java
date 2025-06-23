@@ -23,19 +23,20 @@ public class SecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-            .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-            .csrf(csrf -> csrf.disable())
-            .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/professors/register", "/api/professors/login").permitAll()
-                .requestMatchers("api/professors/lessons").authenticated()
-                .anyRequest().permitAll()
-            )
-            .addFilterBefore(jwtService, UsernamePasswordAuthenticationFilter.class);
+   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+       http
+           .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+           .csrf(csrf -> csrf.disable())
+           .authorizeHttpRequests(auth -> auth
+               .requestMatchers("/api/professors/register", "/api/professors/login").permitAll()
+               .requestMatchers("/api/professors/lessons").authenticated()
+               .anyRequest().permitAll()
+           )
+           .addFilterBefore(jwtService, UsernamePasswordAuthenticationFilter.class);
 
-        return http.build();
-    }
+       return http.build();
+   }
+
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
