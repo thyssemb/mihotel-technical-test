@@ -1,7 +1,13 @@
+//***//
+// File to handle lesson crud API calls
+// Contains the function to display all lessons with their informations by sending credentials to the backend
+// Uses environment variable VITE_API_BACKEND_URL for backend base URL
+//***//
+
 const API_BACKEND_URL = import.meta.env.VITE_API_BACKEND_URL as string;
+console.log(API_BACKEND_URL);
 
 export interface LessonFormData {
-    id?: number; // ajouté pour suppression
     subject?: string;
     level?: string;
     price?: number;
@@ -9,7 +15,7 @@ export interface LessonFormData {
     description?: string;
 }
 
-export async function getLessons(token: string): Promise<LessonFormData[]> {
+export async function getLessons(token: string): Promise<any> {
     const res = await fetch(`${API_BACKEND_URL}/api/lessons`, {
         method: 'GET',
         headers: {
@@ -44,13 +50,18 @@ export async function createLesson(token: string, data: LessonFormData): Promise
     return await response.json();
 }
 
-export async function deleteLesson(token: string, lessonId: number): Promise<any> {
-    const response = await fetch(`${API_BACKEND_URL}/api/lessons/${lessonId}`, {
+export async function deleteLesson(token: string, data: LessonFormData): Promise<any> {
+    if (!data.subject) {
+        throw new Error("Subject is required to delete a lesson");
+    }
+
+    const response = await fetch(`${API_BACKEND_URL}/api/lessons`, {
         method: 'DELETE',
         headers: {
             'Authorization': `Bearer ${token}`,
             'Content-Type': 'application/json',
         },
+        body: JSON.stringify(data),
     });
 
     if (!response.ok) {
@@ -62,7 +73,7 @@ export async function deleteLesson(token: string, lessonId: number): Promise<any
 }
 
 export async function getLessonById(token: string, id: string): Promise<any> {
-    const response = await fetch(`${API_BACKEND_URL}/api/lessons/${id}`, {
+    const res = await fetch(`${API_BACKEND_URL}/api/lessons/${id}`, {
         method: 'GET',
         headers: {
             'Authorization': `Bearer ${token}`,
@@ -70,10 +81,14 @@ export async function getLessonById(token: string, id: string): Promise<any> {
         },
     });
 
-    if (!response.ok) {
-        const errorText = await response.text();
-        throw new Error(`Failed to fetch lesson details: ${errorText}`);
+    if (!res.ok) {
+        const errorText = await res.text();
+        throw new Error(`Failed to fetch lesson with id ${id}: ${errorText}`);
     }
 
-    return await response.json();
+    return await res.json();
+}
+
+export async function updateLesson(token: string, id: string): Promise<any> {
+
 }
