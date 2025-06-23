@@ -70,6 +70,26 @@ public class LessonController {
         return ResponseEntity.ok(lessonRepository.save(lesson));
     }
 
+    @GetMapping("/{id}")
+    @Operation(summary = "Retrieve a specific lesson by ID")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully retrieved lesson"),
+            @ApiResponse(responseCode = "404", description = "Lesson not found", content = @Content)
+    })
+    public ResponseEntity<?> getLessonById(@PathVariable Integer id, Principal principal) {
+        String email = principal.getName();
+        ProfessorEntities professor = professorRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("Professor not found: " + email));
+
+        Lesson lesson = lessonRepository.findById(id).orElse(null);
+
+        if (lesson == null || !lesson.getProfessor().equals(professor)) {
+            return ResponseEntity.status(404).body("Lesson not found or unauthorized access.");
+        }
+
+        return ResponseEntity.ok(lesson);
+    }
+
     @DeleteMapping
     @Operation(summary = "Delete a lesson (requires authenticated professor and a valid lesson to delete)")
     @ApiResponses(value = {

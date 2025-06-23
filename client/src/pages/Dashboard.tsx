@@ -41,20 +41,28 @@ const Dashboard = () => {
     }, [navigate]);
 
     const handleDeleteSuccess = () => {
-        fetchLessons(); // Refresh the list after deletion
+        fetchLessons();
     };
 
     if (loading) {
-        return <div className="text-center p-4">Loading...</div>;
+        return (
+            <div className="flex justify-center items-center p-4">
+                Loading...
+            </div>
+        );
     }
 
     if (error) {
-        return <div className="text-center p-4 text-red-500">{error}</div>;
+        return (
+            <div className="flex justify-center items-center p-4 text-red-500">
+                {error}
+            </div>
+        );
     }
 
     return (
         <div
-            className="container mx-auto p-4 min-h-screen"
+            className="container mx-auto p-4 min-h-screen flex flex-col"
             style={{
                 backgroundImage: `
                     linear-gradient(to right, white 0%, transparent 15%, transparent 85%, white 100%),
@@ -63,17 +71,28 @@ const Dashboard = () => {
                 backgroundRepeat: "repeat",
             }}
         >
-            <h1 className="font-extrabold italic mb-5 uppercase text-black text-5xl md:text-6xl block">Your Lessons</h1>
+            <div className="flex justify-between items-center mb-6">
+                <h1 className="font-extrabold italic uppercase text-black text-5xl md:text-6xl">
+                    Your Lessons
+                </h1>
+            </div>
+
             {lessons.length === 0 ? (
-                <p className="italic text-red-600 text-sm md:text-xl font-medium mt-4 whitespace-pre-wrap">(Oops, you have no lesson posted yet*)</p>
+                <div className="flex justify-center items-center">
+                    <p className="italic text-red-600 text-sm md:text-xl font-medium mt-4 whitespace-pre-wrap">
+                        (Oops, you have no lesson posted yet*)
+                    </p>
+                </div>
             ) : (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 flex-grow">
                     {lessons.map((lesson, index) => (
-                        <div key={index} className="relative bg-white p-4 rounded-lg shadow-md">
-                            <DeleteLessonComponent
-                                lessonSubject={lesson.subject || ''}
-                                onDeleteSuccess={handleDeleteSuccess}
-                            />
+                        <div key={index} className="bg-white p-4 rounded-lg shadow-md relative h-64 overflow-hidden">
+                            <div className="flex justify-end">
+                                <DeleteLessonComponent
+                                    lessonSubject={lesson.subject || ''}
+                                    onDeleteSuccess={handleDeleteSuccess}
+                                />
+                            </div>
                             <h2 className="text-xl font-semibold mb-2">{lesson.subject}</h2>
                             <p className="text-gray-700 mb-1">
                                 <strong>Level:</strong> {lesson.level}
@@ -84,37 +103,47 @@ const Dashboard = () => {
                             <p className="text-gray-700 mb-1">
                                 <strong>Location:</strong> {lesson.location}
                             </p>
-                            <p className="text-gray-700">
+                            <p className="text-gray-700 truncate">
                                 <strong>Description:</strong> {lesson.description}
                             </p>
-                            <div
-                                className="absolute bottom-3 right-3 flex items-center justify-center w-14 h-14 rounded-full border border-black bg-transparent cursor-pointer group"
-                                title="See details"
-                                style={{ userSelect: 'none' }}
-                            >
-                                <svg
-                                    className="w-6 h-6 text-black"
-                                    fill="none"
-                                    stroke="currentColor"
-                                    strokeWidth="2"
-                                    viewBox="0 0 24 24"
-                                    xmlns="http://www.w3.org/2000/svg"
+                            <div className="flex justify-end mt-4">
+                                <button
+                                    onClick={() => navigate(`/lessons/${lesson.id}`)}
+                                    className="flex items-center justify-center w-14 h-14 rounded-full border border-black bg-transparent cursor-pointer group"
+                                    title="See details"
+                                    style={{userSelect: 'none'}}
                                 >
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M7 17l7-7m0 0H7m7 0v7" />
-                                </svg>
-                                <span
-                                    className="absolute bottom-full mb-1 right-0 bg-black text-white text-xs rounded px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none select-none"
-                                    style={{ whiteSpace: 'nowrap' }}
-                                >
-                                    See details
-                                </span>
+                                    <svg
+                                        className="w-6 h-6 text-black"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        strokeWidth="2"
+                                        viewBox="0 0 24 24"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M7 17l7-7m0 0H7m7 0v7"/>
+                                    </svg>
+                                    <span
+                                        className="absolute bottom-full mb-1 right-0 bg-black text-white text-xs rounded px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none select-none"
+                                        style={{whiteSpace: 'nowrap'}}
+                                    >
+                                        See details
+                                    </span>
+                                </button>
                             </div>
                         </div>
                     ))}
                 </div>
             )}
-            <AddLessonCard />
-            <UpdateLessonComponent />
+
+            <div className="mt-6 flex flex-col md:flex-row justify-between gap-4">
+                <div className="flex-1">
+                    <AddLessonCard />
+                </div>
+                <div className="flex-1">
+                    <UpdateLessonComponent />
+                </div>
+            </div>
         </div>
     );
 };

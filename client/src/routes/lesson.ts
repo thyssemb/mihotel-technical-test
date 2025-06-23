@@ -50,10 +50,6 @@ export async function createLesson(token: string, data: LessonFormData): Promise
     return await response.json();
 }
 
-export async function updateLesson(token: string, data: LessonFormData): Promise<any> {
-
-}
-
 export async function deleteLesson(token: string, data: LessonFormData): Promise<any> {
     if (!data.subject) {
         throw new Error("Subject is required to delete a lesson");
@@ -76,3 +72,23 @@ export async function deleteLesson(token: string, data: LessonFormData): Promise
     return await response.json();
 }
 
+export async function getLessonById(token: string, id: string): Promise<any> {
+    const res = await fetch(`${API_BACKEND_URL}/api/lessons/${id}`, {
+        method: 'GET',
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json',
+        },
+    });
+
+    if (!res.ok) {
+        const errorText = await res.text();
+        throw new Error(`Failed to fetch lesson with id ${id}: ${errorText}`);
+    }
+
+    return await res.json();
+}
+
+export async function updateLesson(token: string, id: string): Promise<any> {
+
+}

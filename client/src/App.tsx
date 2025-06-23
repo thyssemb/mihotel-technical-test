@@ -6,6 +6,7 @@ import RegisterPage from "./pages/RegisterPage.tsx";
 import LoginPage from "./pages/LoginPage.tsx";
 import HomePage from "./pages/HomePage";
 import Dashboard from "./pages/Dashboard.tsx";
+import LessonDetails from "./pages/LessonDetails";
 import CustomCursor from "./components/CustomCursor";
 
 const App: React.FC = () => {
@@ -30,6 +31,7 @@ const App: React.FC = () => {
                     <Route path="/register" element={<RegisterPage />} />
                     <Route path="/login" element={<LoginPage />} />
                     <Route path="/dashboard" element={<Dashboard />} />
+                    <Route path="/lessons/:id" element={<LessonDetails />} />
                 </Routes>
             </Layouts>
         </>
