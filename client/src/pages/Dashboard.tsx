@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getLessons } from "../routes/lesson.ts";
 import AddLessonCard from "../components/AddLessonCard.tsx";
-import UpdateLessonComponent from "../components/UpdateLessonComponent.tsx";
 import DeleteLessonComponent from "../components/DeleteLessonComponent.tsx";
 
 interface Lesson {
@@ -114,7 +113,9 @@ const Dashboard = () => {
                 </div>
             )}
             <AddLessonCard />
-            <UpdateLessonComponent />
+            <DeleteLessonComponent lessonSubject={""} onDeleteSuccess={function(): void {
+                throw new Error("Function not implemented.");
+            } } />
         </div>
     );
 };
