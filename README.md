@@ -2,7 +2,9 @@
 
 Technical test for MiHotel (Lyon), where I created a mini web application to manage a private lesson listing site. The application runs on a modern UI (React.js and Tailwind CSS) and communicates with a Java / Spring boot API for all data creation, reading, modification and deletion operations.
 
-**Technical Documentation** : https://docs.google.com/document/d/1ZmM0tvF0ePAMe2QzrT9ioMTGfZagTivl9G5OVyF6zmk/edit?usp=sharing
+**Technical Documentation :** https://docs.google.com/document/d/1ZmM0tvF0ePAMe2QzrT9ioMTGfZagTivl9G5OVyF6zmk/edit?usp=sharing
+
+**API Documentation Swagger UI :** http://localhost:8080/swagger-ui/index.html
 ---
 
 ## Project Overview
