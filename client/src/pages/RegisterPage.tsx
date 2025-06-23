@@ -19,11 +19,11 @@ export default function RegisterPage() {
         e.preventDefault();
         try {
             const savedConfig = await registerProfessor(form);
-            console.log('Professor registered:', savedConfig);
+            console.log("Professor registered:", savedConfig);
             navigate('/login');
         } catch (err) {
             console.error(err);
-            alert('Error during registration');
+            alert("Error during registration");
         }
     };
 

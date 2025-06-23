@@ -30,3 +30,21 @@ export async function getLessons(token: string): Promise<any> {
 
     return await res.json();
 }
+
+export async function createLesson(token: string, data: LessonFormData): Promise<any> {
+    const res = await fetch(`${API_BACKEND_URL}/api/lessons`, {
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    });
+
+    if (!res.ok) {
+        const errorText = await res.text();
+        throw new Error(`Failed to create lesson: ${errorText}`);
+    }
+
+    return await res.json();
+}

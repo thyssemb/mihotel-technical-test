@@ -1,0 +1,16 @@
+version: '3.8'
+
+services:
+  api:
+    build: ./api
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+
+  client:
+    build: ./client
+    ports:
+      - "80:80"
+    depends_on:
+      - api

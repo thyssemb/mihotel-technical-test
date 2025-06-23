@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { getLessons } from '../routes/lesson';
+import React, { useEffect, useState } from"react";
+import { useNavigate } from "react-router-dom";
+import { getLessons } from "../routes/lesson.ts";
 
 import AddLessonCard from "../components/AddLessonCard.tsx";
 
@@ -63,7 +63,7 @@ const Dashboard = () => {
         >
             <h1 className="font-extrabold italic uppercase text-black text-5xl md:text-6xl block">Your Lessons</h1>
             {lessons.length === 0 ? (
-                <p className="italic text-red-600 text-sm md:text-xl font-medium mt-4 whitespace-pre-wrap">(Oops, you have no lessons posted*)</p>
+                <p className="italic text-red-600 text-sm md:text-xl font-medium mt-4 whitespace-pre-wrap">(Oops, you have no lesson posted yet*)</p>
             ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     {lessons.map((lesson, index) => (
