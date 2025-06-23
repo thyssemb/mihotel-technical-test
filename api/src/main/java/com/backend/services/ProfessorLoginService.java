@@ -5,6 +5,9 @@ import com.backend.api.repositories.ProfessorRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 public class ProfessorLoginService {
 
@@ -26,6 +29,10 @@ public class ProfessorLoginService {
             throw new RuntimeException("Invalid password");
         }
 
-        return jwtService.generateToken(prof.getEmail(), prof.getName());
+        List<String> roles = new ArrayList<>();
+        roles.add("USER");
+
+        // Mettez à jour l'appel à generateToken pour inclure les rôles
+        return jwtService.generateToken(prof.getEmail(), prof.getName(), roles);
     }
 }
