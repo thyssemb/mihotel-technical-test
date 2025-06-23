@@ -60,37 +60,36 @@ The project follows the **MVC (Model-View-Controller)** architectural pattern:
 
 ## Setup & Run Instructions
 
-bash
-# 1. Clone the repo
+1. Clone the repo
 git clone https://github.com/toncompte/mihotel-technical-test.git
 cd mihotel-technical-test
 
 2. Database setup
  The MySQL dump is located at :
-# api/src/main/resources/db/database.sql
+api/src/main/resources/db/database.sql
 
-Create the database in MySQL :
+3. Create the database in MySQL :
 mysql -u ton_user -p -e "CREATE DATABASE mihotel;"
 
-Import the dump : 
+4. Import the dump : 
 mysql -u username -p mihotel < api/src/main/resources/db/database.sql
 
-3. Configure backend database connection
+5. Configure backend database connection
 Edit `api/src/main/resources/application.properties`:
 spring.datasource.url=jdbc:mysql://localhost:3306/mihotel?useSSL=false&serverTimezone=UTC
 spring.datasource.username=DBUsername
 spring.datasource.password=DBPassword
 
-4. Run the backend API
+6. Run the backend API
 cd api
 ./gradlew bootRun
 
 Backend runs at http://localhost:8080
 Swagger UI: http://localhost:8080/swagger-ui/index.html
 
-# 5. Run the frontend
+7. Run the frontend
 cd ../client
 npm install
 npm run dev
 
-# Frontend usually runs at http://localhost:5173
+Frontend usually runs at http://localhost:5173
