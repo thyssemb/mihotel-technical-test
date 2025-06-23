@@ -62,18 +62,18 @@ The project follows the **MVC (Model-View-Controller)** architectural pattern:
 
 This project is fully dockerized for easy setup and running. You just need to have **Docker** and **Docker Compose** installed on your machine.
 
-# 1. Clone the repository
+1. Clone the repository
 git clone https://github.com/toncompte/mihotel-technical-test.git
 cd mihotel-technical-test
 
-# 2. Run the application stack with Docker Compose
+2. Run the application stack with Docker Compose
 docker-compose up --build
 
-# This command will:
+ This command will:
 - Launch a MySQL database container with the mihotel database automatically initialized using the provided SQL dump.
 - Build and run the Spring Boot backend, configured to connect to the MySQL container.
 - Build and run the React frontend, accessible via the browser.
 
-# 3. Access the application
+  Access the application
 Frontend UI: http://localhost:3000
 Backend API Swagger UI: http://localhost:8080/swagger-ui/index.html
