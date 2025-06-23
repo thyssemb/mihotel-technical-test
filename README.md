@@ -58,22 +58,39 @@ The project follows the **MVC (Model-View-Controller)** architectural pattern:
 
 ---
 
-## Setup & Run Instructions (Using Docker)
+## Setup & Run Instructions
 
-This project is fully dockerized for easy setup and running. You just need to have **Docker** and **Docker Compose** installed on your machine.
-
-1. Clone the repository
+bash
+# 1. Clone the repo
 git clone https://github.com/toncompte/mihotel-technical-test.git
 cd mihotel-technical-test
 
-2. Run the application stack with Docker Compose
-docker-compose up --build
+# 2. Database setup
+# The MySQL dump is located at:
+# api/src/main/resources/db/database.sql
 
- This command will:
-- Launch a MySQL database container with the mihotel database automatically initialized using the provided SQL dump.
-- Build and run the Spring Boot backend, configured to connect to the MySQL container.
-- Build and run the React frontend, accessible via the browser.
+# Create the database in MySQL:
+mysql -u ton_user -p -e "CREATE DATABASE mihotel;"
 
-  Access the application
-Frontend UI: http://localhost:3000
-Backend API Swagger UI: http://localhost:8080/swagger-ui/index.html
+# Import the dump:
+mysql -u username -p mihotel < api/src/main/resources/db/database.sql
+
+# 3. Configure backend database connection
+# Edit `api/src/main/resources/application.properties`:
+# spring.datasource.url=jdbc:mysql://localhost:3306/mihotel?useSSL=false&serverTimezone=UTC
+# spring.datasource.username=DBUsername
+# spring.datasource.password=DBPassword
+
+# 4. Run the backend API
+cd api
+./gradlew bootRun
+
+# Backend runs at http://localhost:8080
+# Swagger UI: http://localhost:8080/swagger-ui/index.html
+
+# 5. Run the frontend
+cd ../client
+npm install
+npm run dev
+
+# Frontend usually runs at http://localhost:5173
