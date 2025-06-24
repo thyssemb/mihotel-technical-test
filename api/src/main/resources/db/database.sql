@@ -1,6 +1,7 @@
 -- MySQL dump 10.13  Distrib 9.0.1, for macos14.4 (arm64)
 --
 -- Host: localhost    Database: mihotel
+-- Please enter your database Name
 -- ------------------------------------------------------
 -- Server version	8.2.0
 
@@ -75,7 +76,6 @@ CREATE TABLE `professor` (
 
 LOCK TABLES `professor` WRITE;
 /*!40000 ALTER TABLE `professor` DISABLE KEYS */;
-INSERT INTO `professor` VALUES (1,'Jean Dupont','jean.dupont@example.com','$2a$10$XPClwRByUY52UNM8eDKiFuaWZEziipm3RNE4D9092qSh0smyuUVpW',NULL,NULL,'2025-06-22 15:50:12',NULL),(2,'titi','titi@titi.com','$2a$10$h6S1toorgYgAzk3kMzLOh.FOTRTpTD2/UyxB5FZLzK5vdPp9igAyK',NULL,NULL,'2025-06-22 15:52:10',NULL),(3,'thyss','thyss@hotmail.com','$2a$10$gSU4FFL6F4Iq1A9o7YtCXe54/iFkwLjob8xnT31x0SxDeFl9TAU/m',NULL,NULL,'2025-06-22 16:06:21',NULL),(4,'titi','titi@hotmail.com','$2a$10$lJ8Da1gjDLOUkO9xVehMv.wCPt00nCzCdtrpdVtcrVUFlvSIWg0/W',NULL,NULL,'2025-06-23 00:05:48',NULL),(5,'test','test@test.com','$2a$10$WcG/TjA0EPFn01A4AbKCZO5Vd2HEjuj7M269iIJsDV6Rx/ibvCTOO',NULL,NULL,'2025-06-23 08:09:55',NULL),(8,'test','test@hotmail.com','$2a$10$W/AjfC88maGF9xvWbI6ruOIq5cTtchAMHRv10wQ4bnZ5s7zEcXgGW',NULL,NULL,'2025-06-23 08:48:26',NULL);
 /*!40000 ALTER TABLE `professor` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
