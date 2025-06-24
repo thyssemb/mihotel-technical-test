@@ -1,4 +1,3 @@
-# Étape 1 : builder le projet avec Gradle (build image temporaire)
 FROM eclipse-temurin:17-jdk-jammy AS build
 
 WORKDIR /app
